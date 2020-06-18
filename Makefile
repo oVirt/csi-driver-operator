@@ -17,7 +17,7 @@ test:
 # Build the binary
 .PHONY: build
 build:
-	go build -o $(BINDIR)/ovirt-csi-operator -ldflags '-X version.Version=$(REV) -extldflags "-static"' github.com/ovirt/csi-driver-operator/cmd/manager
+	go build -o $(BINDIR)/ovirt-csi-driver-operator -ldflags '-X version.Version=$(REV) -extldflags "-static"' github.com/ovirt/csi-driver-operator/cmd/manager
 
 
 .PHONY: verify

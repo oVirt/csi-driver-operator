@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: openshift-ovirt-csi-operator
+  name: openshift-ovirt-csi-driver-operator
 ---
 apiVersion: v1
 kind: ServiceAccount

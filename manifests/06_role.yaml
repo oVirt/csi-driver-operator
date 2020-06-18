@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   creationTimestamp: null
   name: csi-operator
-  namespace: openshift-ovirt-csi-operator
+  namespace: openshift-ovirt-csi-driver-operator
 rules:
 - apiGroups:
   - "cloudcredential.openshift.io"

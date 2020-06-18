@@ -49,7 +49,7 @@ const (
 	// Name of volume with /var/lib/kubelet
 	kubeletRootVolumeName = "kubelet-root"
 
-	namespace = "openshift-ovirt-csi-operator"
+	namespace = "openshift-ovirt-csi-driver-operator"
 
 	// OwnerLabelNamespace is name of label with namespace of owner CSIDriverDeployment.
 	OwnerLabelNamespace = "csidriver.storage.openshift.io/owner-namespace"

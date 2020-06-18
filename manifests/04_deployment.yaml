@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ovirt-csi-operator
-  namespace: openshift-ovirt-csi-operator
+  name: ovirt-csi-driver-operator
+  namespace: openshift-ovirt-csi-driver-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: ovirt-csi-operator
+      name: ovirt-csi-driver-operator
   template:
     metadata:
       labels:
-        name: ovirt-csi-operator
+        name: ovirt-csi-driver-operator
     spec:
       serviceAccountName: csi-operator
       containers:
-        - name: ovirt-csi-operator
-          # Replace this with the built image name
-          image: quay.io/ovirt/csi-operator
+        - name: ovirt-csi-driver-operator
+          image: quay.io/ovirt/csi-driver-operator
           command:
-          - csi-operator
+          - ovirt-csi-driver-operator
           args:
             - "--v=5"
             - "--zap-devel"
@@ -36,4 +35,4 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "csi-operator"
+              value: "ovirt-csi-driver-operator"
