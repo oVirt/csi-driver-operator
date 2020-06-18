@@ -17,7 +17,7 @@ This operator will deploy and watch oVirt csi driver components:
 curl -s https://api.github.com/repos/ovirt/csi-driver-operator/contents/manifests \
  | jq '.[].download_url' \
  | xargs curl -L \
- | cat
+ | oc create -f -
 
 ```
 2. Create a storage class and point it to the oVirt storage domain in use:
@@ -43,9 +43,7 @@ EOF
 make build verify
 ```
 
-- create a container image tagged 'quay.io/ovirt/ovirt-csi-driver-operator:latest'
+- create a container image tagged `quay.io/ovirt/ovirt-csi-driver-operator:latest`
 ```bash
 make image
 ```
-
-      
