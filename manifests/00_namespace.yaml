@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -7,4 +8,3 @@ metadata:
   labels:
     name: openshift-ovirt-csi-driver-operator
     openshift.io/run-level: "1"
-
