@@ -17,16 +17,16 @@ test:
 # Build the binary
 .PHONY: build
 build:
-	go build -o $(BINDIR)/ovirt-csi-driver-operator -ldflags '-X version.Version=$(REV) -extldflags "-static"' github.com/ovirt/csi-driver-operator/cmd/manager
+	go build -o $(BINDIR)/ovirt-csi-driver-operator -ldflags '-X version.Version=$(REV) -extldflags "-static"' github.com/ovirt/csi-driver-operator/cmd/ovirt-csi-driver-operator
 
 
 .PHONY: verify
 verify: fmt vet
 
 fmt:
-	hack/verify-gofmt.sh
+	go fmt ./...
 vet:
-	hack/verify-govet.sh
+	go vet ./...
 
 .PHONY: image
 image:
