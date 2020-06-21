@@ -1,18 +1,18 @@
 # An operator to deploy oVirt's CSI driver
 
-Under development
+> __UNDER DEVELOPMENT__
 
 Container Image: https://quay.io/repository/ovirt/csi-driver-operator
 
 This operator will deploy and watch oVirt csi driver components:
-- OvirtCSIOperator - the main operator object  
-- StatefulSet of the csi controller
-- DaemonSet of the csi node
-- RBAC objects (ServiceAccount, ClusterRoles, RoleBindings)
+- __OvirtCSIOperator__ - the main operator object  
+- __StatefulSet__ of the csi controller
+- __DaemonSet__ of the csi node
+- RBAC objects (__ServiceAccount__, __ClusterRoles__, __RoleBindings__)
       
 ## Installation
 
-1. Deploy the operator from [manifests/](manifests) directory:
+1. Deploy the operator from [manifests/](manifests) directory(needs [jq tool](https://stedolan.github.io/jq/)):
 ```bash
 curl -s https://api.github.com/repos/ovirt/csi-driver-operator/contents/manifests \
  | jq '.[].download_url' \
