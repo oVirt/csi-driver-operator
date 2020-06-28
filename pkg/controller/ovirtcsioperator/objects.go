@@ -1,6 +1,7 @@
 package ovirtcsioperator
 
 import (
+	"fmt"
 	"path"
 	"regexp"
 
@@ -12,6 +13,7 @@ import (
 	storagev1beta1 "k8s.io/api/storage/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/intstr"
 
 	"github.com/ovirt/csi-driver-operator/pkg/apis/operator/v1alpha1"
 	csidriverv1alpha1 "github.com/ovirt/csi-driver-operator/pkg/apis/operator/v1alpha1"
@@ -31,6 +33,9 @@ const (
 
 	// Default timeout of the probe (in seconds)
 	livenessprobeDefaultTimeout = int32(30)
+
+	livenessprobeInitialDelaySeconds = int32(10)
+	livenessprobePeriodSeconds       = int32(30)
 
 	// Name of volume with CSI driver socket
 	driverSocketVolume = "socket-dir"
@@ -712,6 +717,28 @@ EOF`,
 			"--namespace=" + namespace,
 			"--endpoint=unix:" + sidecarSocketPath,
 		},
+		Ports: []v1.ContainerPort{
+			{
+				Name:          "healthz",
+				Protocol:      v1.ProtocolTCP,
+				ContainerPort: 9808,
+			},
+		},
+		LivenessProbe: &v1.Probe{
+			FailureThreshold: 5,
+			Handler: v1.Handler{
+				HTTPGet: &v1.HTTPGetAction{
+					Path: "/healthz",
+					Port: intstr.IntOrString{
+						Type:   intstr.String,
+						StrVal: "healthz",
+					},
+				},
+			},
+			InitialDelaySeconds: livenessprobeInitialDelaySeconds,
+			TimeoutSeconds:      livenessprobeDefaultTimeout,
+			PeriodSeconds:       livenessprobePeriodSeconds,
+		},
 		Env: []v1.EnvVar{
 			{
 				Name: "KUBE_NODE_NAME",
@@ -734,6 +761,24 @@ EOF`,
 			{
 				Name:      configVolumeName,
 				MountPath: configVolumePath,
+			},
+		},
+	})
+
+	// liveness probe
+	containers = append(containers, v1.Container{
+		Name:  "liveness-probe",
+		Image: "quay.io/k8scsi/livenessprobe:v2.0.0",
+		Args: []string{
+			"-v=5",
+			fmt.Sprintf("-csi-address=%s", sidecarSocketPath),
+			fmt.Sprintf("-health-port=%d", livenessprobePort),
+			fmt.Sprintf("-probe-timeout=%ds", livenessprobeDefaultTimeout),
+		},
+		VolumeMounts: []v1.VolumeMount{
+			{
+				Name:      driverSocketVolume,
+				MountPath: socketDir,
 			},
 		},
 	})
