@@ -474,6 +474,10 @@ EOF`,
 				MountPath: "/dev",
 			},
 			{
+				Name:      "udev",
+				MountPath: "/run/udev",
+			},
+			{
 				Name:             "mountpoint-dir",
 				MountPath:        "/var/lib/kubelet/pods",
 				MountPropagation: &mountPropogationType,
@@ -553,6 +557,14 @@ EOF`,
 							VolumeSource: v1.VolumeSource{
 								HostPath: &v1.HostPathVolumeSource{
 									Path: "/dev",
+								},
+							},
+						},
+						{
+							Name: "udev",
+							VolumeSource: v1.VolumeSource{
+								HostPath: &v1.HostPathVolumeSource{
+									Path: "/run/udev",
 								},
 							},
 						},
