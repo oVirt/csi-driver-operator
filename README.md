@@ -1,6 +1,7 @@
-# An operator to deploy oVirt's CSI driver
+# This repository is inactive, please refer to: https://github.com/openshift/ovirt-csi-driver-operator
 
-> __UNDER DEVELOPMENT__
+## An operator to deploy oVirt's CSI driver
+
 
 Container Image: https://quay.io/repository/ovirt/csi-driver-operator
 
